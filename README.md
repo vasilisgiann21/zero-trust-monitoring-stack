@@ -3,17 +3,16 @@
 
 
 ## 🚀 Overview
-This repository contains the Infrastructure as Code (IaC) for a highly hardened, containerized homelab environment. The objective was to deploy a robust monitoring stack (Grafana/Prometheus) alongside a network-wide DNS sinkhole (Pi-hole) using a strict **Zero-Trust architecture**. 
+This repository contains the Infrastructure as Code (IaC) for a hardened, containerized homelab environment. The objective was to deploy a robust monitoring stack (Grafana/Prometheus) alongside a network-wide DNS sinkhole (Pi-hole) utilizing a strict **Zero-Trust architecture**. 
 
-Instead of relying on traditional perimeter security (like port-forwarding on an edge router), this infrastructure is mathematically invisible to both the public internet and the physical Local Area Network (LAN). All access is authenticated, encrypted, and routed exclusively through a Tailscale mesh VPN.
+Instead of relying on traditional perimeter security (like port-forwarding on an edge router), this infrastructure is mathematically invisible to both the public internet and the physical Local Area Network (LAN). All administrative and dashboard access is authenticated, encrypted, and routed exclusively through a Tailscale mesh VPN.
 
 ## 🛡️ Security Philosophy: Defense in Depth
-The core engineering philosophy of this project is to assume that the local Wi-Fi network is already compromised. Security is implemented in overlapping layers:
+The core engineering philosophy of this project assumes that the local Wi-Fi network is implicitly untrusted. Security is implemented in overlapping layers:
 
-1. **Identity-Based Access (Tailscale):** Creates an encrypted, peer-to-peer WireGuard tunnel. The server has zero open doors to the public internet.
-2. **Host Firewall (UFW):** The Uncomplicated Firewall acts as the OS-level gatekeeper. The default policy drops all incoming traffic, explicitly allowing only Port 22 (SSH) and traffic originating from the `tailscale0` encrypted interface.
-3. **Cryptographic Authentication:** Password authentication for SSH is disabled in favor of RSA/Ed25519 key pairs to prevent brute-force attacks.
-4. **Strict Network Binding:** Docker bypasses host firewalls by default. To neutralize this, container ports are strictly bound to the VPN interface, ensuring services cannot broadcast to the physical network card.
+1. **Identity-Based Access (Tailscale):** Creates an encrypted, peer-to-peer WireGuard tunnel. The server has zero exposed ports to the public internet.
+2. **Host Firewall (UFW):** The Uncomplicated Firewall acts as the OS-level gatekeeper. The default policy drops all incoming traffic, explicitly allowing only standard SSH management (Port 22) and traffic originating from the `tailscale0` encrypted interface.
+3. **Strict Network Binding:** Docker bypasses host firewalls by default. To neutralize this, container ports are strictly bound to the VPN interface, ensuring services cannot broadcast to the physical network card.
 
 ## 🧠 Engineering Challenges & Analytical Resolutions
 
