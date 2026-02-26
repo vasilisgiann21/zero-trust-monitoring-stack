@@ -33,7 +33,7 @@ Every tool in this stack was chosen to solve a specific architectural problem. H
 ### 5. Tailscale (Encrypted Mesh VPN)
 * **The Mechanic:** Tailscale is an overlay network built on the WireGuard protocol. It uses public-key cryptography to create a direct, peer-to-peer mesh network between authorized devices.
 * **The "Why":** Opening a port on a home router (NAT) exposes the server to global botnets. Tailscale uses STUN/TURN servers (DERP relays) to facilitate NAT traversal. It allows the client laptop and the server to punch a secure hole through their respective firewalls and connect directly, creating a private LAN over the public internet with zero open incoming ports.
-* **Diagram Reference:** 
+
 
 ## 🛡️ Security Philosophy: Defense in Depth
 The core engineering philosophy of this project assumes that the local Wi-Fi network is implicitly untrusted. Security is implemented in overlapping layers:
