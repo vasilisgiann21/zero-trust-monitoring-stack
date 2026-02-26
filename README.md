@@ -14,12 +14,12 @@ Every tool in this stack was chosen to solve a specific architectural problem. H
 ### 1. Docker & Docker Compose (Containerization)
 * **The Mechanic:** Instead of installing services directly onto the host Linux OS (bare-metal), all services run in isolated Docker containers. 
 * **The "Why":** Installing complex software directly on the OS creates "dependency hell," where updating one package breaks another. Docker leverages Linux namespaces and cgroups to give each service its own isolated filesystem and network stack. By using `docker-compose.yml` (Infrastructure as Code), the entire server's state becomes reproducible. If the host machine suffers a catastrophic failure, this infrastructure can be rebuilt on a new machine in exactly one command, rather than spending hours configuring `apt` packages.
-* **Diagram Reference:** 
+ 
 
 ### 2. Prometheus (Time Series Database)
 * **The Mechanic:** Prometheus is not a standard relational database; it is a Time Series Database (TSDB) optimized for fast, high-volume metric ingestion.
 * **The "Why":** Rather than waiting for services to push data to it, Prometheus uses a "pull-based" HTTP model. It routinely scrapes target endpoints (like server CPU, memory, and network I/O stats) at set intervals. It stores this data locally with multi-dimensional labels, making it incredibly efficient to query server performance at exact timestamps in the past.
-* **Diagram Reference:** 
+
 
 ### 3. Grafana (Visualization Engine)
 * **The Mechanic:** Grafana acts as the visual frontend for Prometheus. It connects to the TSDB and executes queries using PromQL (Prometheus Query Language).
@@ -28,7 +28,7 @@ Every tool in this stack was chosen to solve a specific architectural problem. H
 ### 4. Pi-hole (Network-Level DNS Sinkhole)
 * **The Mechanic:** Pi-hole acts as the primary Domain Name System (DNS) resolver for the VPN network. When a client requests an IP address for a domain, Pi-hole cross-references the request against millions of known tracking and malware domains (Gravity Lists). 
 * **The "Why":** Traditional ad-blockers run in the browser and hide elements *after* they are downloaded. Pi-hole stops the connection at the network level. If a request is malicious, Pi-hole returns `0.0.0.0` (a blackhole IP) to the client. This prevents the connection from ever leaving the router, saving bandwidth and neutralizing telemetry before it executes.
-* **Diagram Reference:** 
+
 
 ### 5. Tailscale (Encrypted Mesh VPN)
 * **The Mechanic:** Tailscale is an overlay network built on the WireGuard protocol. It uses public-key cryptography to create a direct, peer-to-peer mesh network between authorized devices.
